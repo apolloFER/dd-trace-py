@@ -29,8 +29,9 @@ def patch_task(task, pin=None):
     patch_methods = [
         ('__init__', _task_init),
         ('run', _task_run),
-        ('apply', _task_apply),
-        ('apply_async', _task_apply_async),
+        # non-run causes some weird cls/self confusion in the way we do 1.0 style tasks
+        # ('apply', _task_apply),
+        # ('apply_async', _task_apply_async),
     ]
     for method_name, wrapper in patch_methods:
         # Get original method
@@ -60,8 +61,8 @@ def unpatch_task(task):
     patched_methods = [
         '__init__',
         'run',
-        'apply',
-        'apply_async',
+        # 'apply',
+        # 'apply_async',
     ]
     for method_name in patched_methods:
         # Get wrapped method
